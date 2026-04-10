@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics • AI Threat Intel{% endblock %}
+{% block page_title %}Analytics{% endblock %}
+{% block page_subtitle %}Threat distribution and recent trends{% endblock %}
+
+{% block head %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="grid analytics">
+    <div class="card glass">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Threat Distribution</div>
+          <div class="card-hint">Safe vs Phishing</div>
+        </div>
+      </div>
+      <canvas id="distChart" height="140"></canvas>
+    </div>
+
+    <div class="card glass">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Risk Trend</div>
+          <div class="card-hint">Recent scans</div>
+        </div>
+      </div>
+      <canvas id="trendChart" height="140"></canvas>
+    </div>
+
+    <div class="card glass">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Recent Scans</div>
+          <div class="card-hint">Last 10</div>
+        </div>
+        <button class="btn" id="refreshAnalyticsBtn" type="button">Refresh</button>
+      </div>
+      <div class="mini-list" id="recentScans"></div>
+    </div>
+  </div>
+{% endblock %}
+

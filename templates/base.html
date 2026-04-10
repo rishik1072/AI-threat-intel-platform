@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}AI Threat Intel{% endblock %}</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <div class="bg">
+      <canvas id="particleCanvas" class="bg-particles" aria-hidden="true"></canvas>
+      <div class="bg-gradient"></div>
+      <div class="bg-noise"></div>
+    </div>
+
+    <div class="shell">
+      <aside class="sidebar glass">
+        <div class="brand">
+          <div class="brand-badge">AI</div>
+          <div class="brand-text">
+            <div class="brand-title">Threat Intel</div>
+            <div class="brand-sub">Phishing Detection</div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a class="nav-item {% if request.path == '/' %}active{% endif %}" href="/">Scan</a>
+          <a class="nav-item {% if request.path.startswith('/history') %}active{% endif %}" href="/history">History</a>
+          <a class="nav-item {% if request.path.startswith('/analytics') %}active{% endif %}" href="/analytics">Analytics</a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button class="btn ghost" id="themeToggle" type="button" title="Toggle theme">
+            <span class="dot"></span>
+            <span id="themeLabel">Dark</span>
+          </button>
+          <div class="meta">
+            <div class="meta-line">2026 UI • Glass</div>
+            <div class="meta-line">Local DB • SQLite</div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="topbar-left">
+            <div class="page-title">{% block page_title %}{% endblock %}</div>
+            <div class="page-sub">{% block page_subtitle %}{% endblock %}</div>
+          </div>
+          <div class="topbar-right">
+            <div class="pill glass">
+              <span class="pill-k">Status</span>
+              <span class="pill-v" id="healthPill">Ready</span>
+            </div>
+          </div>
+        </header>
+
+        <section class="content">
+          {% block content %}{% endblock %}
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
+

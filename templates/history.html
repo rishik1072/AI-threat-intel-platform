@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}History • AI Threat Intel{% endblock %}
+{% block page_title %}History{% endblock %}
+{% block page_subtitle %}Search and filter past scans{% endblock %}
+
+{% block content %}
+  <div class="grid single">
+    <div class="card glass">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Scan History</div>
+          <div class="card-hint">Filter by query, risk, prediction</div>
+        </div>
+        <button class="btn" type="button" id="refreshHistoryBtn">Refresh</button>
+      </div>
+
+      <div class="filters">
+        <input id="histQuery" class="input" placeholder="Search input..." />
+        <select id="histRisk" class="input">
+          <option value="">Any risk</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+        <select id="histPred" class="input">
+          <option value="">Any prediction</option>
+          <option value="safe">Safe</option>
+          <option value="phishing">Phishing</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Time</th>
+              <th>Type</th>
+              <th>Input</th>
+              <th>Prediction</th>
+              <th>Threat</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="historyTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Scan • AI Threat Intel{% endblock %}
+{% block page_title %}Scan{% endblock %}
+{% block page_subtitle %}Real-time phishing detection with AI + explainability{% endblock %}
+
+{% block content %}
+  <div class="grid">
+    <div class="card glass scan-card">
+      <div class="card-head">
+        <div class="card-title">Scan Input</div>
+        <div class="card-hint">URL, domain, or email text</div>
+      </div>
+
+      <div class="form">
+        <div class="field">
+          <label class="label" for="scanInput">Input</label>
+          <textarea id="scanInput" class="input" rows="4" placeholder="Paste a URL, a domain (example.com), or an email message..."></textarea>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label class="label" for="inputType">Type</label>
+            <select id="inputType" class="input">
+              <option value="auto" selected>Auto-detect</option>
+              <option value="url">URL</option>
+              <option value="domain">Domain</option>
+              <option value="email">Email Text</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="label" for="heavyMode">Mode</label>
+            <select id="heavyMode" class="input">
+              <option value="0" selected>Fast</option>
+              <option value="1">Deep (async)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="scanBtn" class="btn primary" type="button">
+            <span class="btn-glow"></span>
+            <span class="btn-text">Scan Now</span>
+          </button>
+          <button id="exportJsonBtn" class="btn" type="button" disabled>Export JSON</button>
+          <button id="exportPdfBtn" class="btn" type="button" disabled>Export PDF</button>
+        </div>
+
+        <div class="scan-status" id="scanStatus">
+          <div class="spinner" aria-hidden="true"></div>
+          <div class="scan-status-text">Scanning…</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card glass results-card">
+      <div class="card-head">
+        <div class="card-title">Results</div>
+        <div class="card-hint">Prediction, confidence, threat score</div>
+      </div>
+
+      <div class="results">
+        <div class="badge-row">
+          <div class="badge" id="predBadge">—</div>
+          <div class="badge ghost" id="riskBadge">Risk: —</div>
+          <div class="badge ghost" id="confBadge">Conf: —</div>
+        </div>
+
+        <div class="threat">
+          <div class="threat-head">
+            <div class="threat-title">Threat Score</div>
+            <div class="threat-val" id="threatVal">0</div>
+          </div>
+          <div class="bar">
+            <div class="bar-fill" id="threatBar" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div class="score-breakdown" id="scoreBreakdownBox">
+          <div class="score-breakdown-head">
+            <div class="threat-title">Threat Score Breakdown</div>
+            <div class="mini" id="scoreBreakdownMeta">—</div>
+          </div>
+          <div class="score-stack-wrap">
+            <div class="score-stack" id="scoreStack"></div>
+          </div>
+          <div class="mini" id="scoreStackLegend">—</div>
+          <div class="score-breakdown-list" id="scoreBreakdownList"></div>
+        </div>
+
+        <div class="intel">
+          <div class="intel-title">Threat Intelligence</div>
+          <div class="intel-body" id="intelBody">—</div>
+          <details class="intel-details" id="intelDetails" open>
+            <summary class="intel-summary">
+              <span>Provider details</span>
+              <span class="mini" id="intelSummaryMini">—</span>
+            </summary>
+            <div class="intel-details-body" id="intelDetailsBody">—</div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <div class="card glass explain-card">
+      <div class="card-head">
+        <div class="card-title">AI Explanation Panel</div>
+        <div class="card-hint">Why this was flagged</div>
+      </div>
+
+      <div class="explain">
+        <div class="explain-section">
+          <div class="explain-title">Top reasons</div>
+          <ul class="reasons" id="reasonsList"></ul>
+        </div>
+
+        <div class="explain-section">
+          <div class="explain-title">Suspicious highlights</div>
+          <div class="highlights" id="highlightsBox">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card glass chat-card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Chatbot Assistant</div>
+          <div class="card-hint">Ask “why” and get a plain-English explanation</div>
+        </div>
+        <button class="btn ghost" type="button" id="chatClearBtn">Clear</button>
+      </div>
+
+      <div class="chat">
+        <div class="chat-log" id="chatLog" aria-live="polite"></div>
+        <div class="chat-row">
+          <input class="input" id="chatInput" placeholder="Ask about the result (e.g., 'What made this suspicious?')" />
+          <button class="btn primary" type="button" id="chatSendBtn">
+            <span class="btn-glow"></span>
+            <span class="btn-text">Send</span>
+          </button>
+        </div>
+        <div class="mini">Tip: run a scan first, then ask follow-ups.</div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
